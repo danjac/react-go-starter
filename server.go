@@ -17,8 +17,9 @@ var (
 )
 
 type Post struct {
-	ID    int64  `json:"id"`
-	Title string `json:"title"`
+	ID    int64  `json:"id" binding:"-"`
+	Title string `json:"title" binding:"required"`
+	Text  string `json:"text" binding:"required"`
 }
 
 func main() {
@@ -39,12 +40,24 @@ func main() {
 	api := r.Group(apiPrefix)
 
 	posts := []*Post{
-		&Post{1, "my first post"},
-		&Post{2, "my next post"},
+		&Post{1, "my first post", "hello"},
+		&Post{2, "my next post", "hello again"},
 	}
 
 	api.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"posts": posts})
+	})
+
+	api.POST("/", func(c *gin.Context) {
+		post := &Post{}
+		if err := c.BindJSON(post); err != nil {
+			c.AbortWithError(http.StatusBadRequest, err)
+			return
+		}
+		post.ID = int64(len(posts) + 1)
+		posts = append(posts, post)
+		c.JSON(http.StatusOK, post)
+
 	})
 
 	api.GET("/:id", func(c *gin.Context) {
@@ -56,8 +69,14 @@ func main() {
 			return
 		}
 
-		post := &Post{id, "something"}
-		c.JSON(http.StatusOK, post)
+		for _, post := range posts {
+			if post.ID == id {
+				c.JSON(http.StatusOK, post)
+				return
+			}
+		}
+
+		c.String(http.StatusNotFound, "No post found")
 	})
 
 	if err := r.Run(":8080"); err != nil {

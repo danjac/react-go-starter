@@ -27,6 +27,18 @@ class Api {
         .end()
         .then(res => res.body);
     }
+
+    createPost(title, text) {
+        return request
+        .post("/")
+        .use(this.prefix, this.json)
+        .send({
+            title: title,
+            text: text
+        })
+        .end()
+        .then(res => res.body);
+    }
 }
 
 export default new Api();

@@ -1,5 +1,4 @@
 import React from 'react';
-import { State } from 'react-router';
 import ListenerMixin from 'alt/mixins/ListenerMixin';
 import PostActions from '../actions/PostActions';
 import PostStore from '../stores/PostStore';
@@ -7,7 +6,7 @@ import PostStore from '../stores/PostStore';
 
 export default React.createClass({
 
-    mixins: [State, ListenerMixin],
+    mixins: [ListenerMixin],
 
     getInitialState() {
         return PostStore.getState();
@@ -18,7 +17,7 @@ export default React.createClass({
     },
 
     componentDidMount() {
-        PostActions.fetchPost(this.getParams().id);
+        PostActions.fetchPost(this.props.params.id);
     },
 
     onChange() {
@@ -32,7 +31,7 @@ export default React.createClass({
         }
         return (
             <div>
-                <h3>{post.title}</h3>
+                <h3>{post.title} #{this.props.params.id}</h3>
                 <p>{post.text}</p>
             </div>
         );

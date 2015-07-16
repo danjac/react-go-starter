@@ -15,6 +15,10 @@ class PostStore {
     fetchPost(post) {
         this.postDetail = post;
     }
+
+    newPost(post) {
+        this.posts.push(post);
+    }
 }
 
 export default alt.createStore(PostStore);

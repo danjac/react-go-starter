@@ -7,9 +7,10 @@ export default React.createClass({
     render() {
         return (
             <div>
-                <Navbar brand="blog">
+                <Navbar brand="react-go-starter">
                     <Nav>
                         <NavItemLink to="postsList">Home</NavItemLink>
+                        <NavItemLink to="newPost">Add a post</NavItemLink>
                     </Nav>
                 </Navbar>
 

@@ -15,6 +15,11 @@ class PostActions {
         this.dispatch(post);
     }
 
+    async newPost(title, text) {
+        const post = await api.createPost(title, text);
+        this.dispatch(post);
+    }
+
 }
 
 export default alt.createActions(PostActions);

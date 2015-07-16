@@ -3,7 +3,7 @@ import Router from 'react-router';
 import routes from './routes';
 
 const router = Router.create({
-    location: Router.HistoryLocation,
+    location: Router.HashLocation,
     routes: routes
 });
 
