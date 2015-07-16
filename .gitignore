@@ -1,0 +1,14 @@
+Godeps/_workspace
+bower_components
+static/js
+static/css
+static/fonts
+pkg
+node_modules
+*.sqlite3
+*.log
+*.swp
+*.swo
+*.db
+.env
+:w
